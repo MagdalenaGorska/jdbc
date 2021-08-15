@@ -14,7 +14,9 @@ public class ParkingApp {
             parking.addPerson();
             //parking.testGet();
             parking.addPerson();
+            parking.deletePerson();
             parking.addPerson();
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -59,6 +59,10 @@ public class ParkingFunctions {
         }
     }
 
+    public void setSpotForDisabled() {
+
+    }
+
     public void addPerson() {
         System.out.println("Dodawanie osoby: Podaj imię, nazwisko i numer rejestracyjny");
         try {
@@ -80,7 +84,6 @@ public class ParkingFunctions {
                 //                           -> jeśli nie, to następuje prośba o ponowne wybranie miejsca
                 do {
                     System.out.println("Podaj wolne miejsce");
-                    //ja już sama nie wiem co tu się odpierdziela xD
                     chosenParkingSpot = scanner.nextInt();
                     resultSet = statement.executeQuery("SELECT idPerson FROM PARKING WHERE id = " + chosenParkingSpot);
                     if (resultSet.next()) {
@@ -89,6 +92,8 @@ public class ParkingFunctions {
                     }
                 }
                 while (x != 0);
+
+                //Jeśli miejsce zostało prawidłowo wybrane, to nastąpi update tabelki Parking
                 prepareStatementUpdate = connection.prepareStatement("UPDATE PARKING SET idPerson = " + IdPerson + " WHERE id = ?");
                 prepareStatementUpdate.setInt(1, chosenParkingSpot);
                 prepareStatementUpdate.executeUpdate();
@@ -100,23 +105,23 @@ public class ParkingFunctions {
 
     }
 
-    //Popraw to, kasztanie
     public void deletePerson() {
         System.out.println("Usuwanie osoby: Podaj id osoby");
         try {
             prepareStatementUpdate = connection.prepareStatement("DELETE FROM PERSON WHERE id = ?");
-            prepareStatementUpdate.setString(1, scanner.next());
+            String chosenPersonToDelete = scanner.next();
+            prepareStatementUpdate.setString(1, chosenPersonToDelete);
             prepareStatementUpdate.executeUpdate();
 
-            prepareStatementUpdate = connection.prepareStatement("UPDATE PARKING SET idPerson = 1 WHERE id = ?");
-            prepareStatementUpdate.setInt(1, scanner.nextInt());
+            prepareStatementUpdate = connection.prepareStatement("UPDATE PARKING SET idPerson = 0 WHERE idPerson = " + chosenPersonToDelete);
             prepareStatementUpdate.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-//    // Chcesz to dodać do ParkingSpot?
+
+//    Dodać do ParkingSpot?
 //    public void testGet() {
 //        try {
 //            ResultSet resultSet = statement.executeQuery("SELECT id FROM PARKING WHERE idPerson = 1;");
@@ -127,7 +132,7 @@ public class ParkingFunctions {
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //        }
- //
+    //
 //    }
 
 }
