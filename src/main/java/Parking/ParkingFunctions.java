@@ -54,13 +54,24 @@ public class ParkingFunctions {
             for (int i = 0; i < howManySlots; i++) {
                 statement.execute("INSERT INTO PARKING (isDisabled, idPerson) VALUES (false,0)");
             }
+            setSpotForDisabled(howManySlots);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void setSpotForDisabled() {
-
+    private void setSpotForDisabled(int howManySlots) {
+        try {
+            System.out.println("Ile jest miejsc parkingowych dla niepełnosprawnych?");
+            scanner = new Scanner(System.in);
+            int howManyDisabledSlots = scanner.nextInt();
+            for (int i = 1; i <= howManyDisabledSlots; i++) {
+                prepareStatementUpdate = connection.prepareStatement("UPDATE PARKING SET isDisabled = true WHERE id = " + i);
+                prepareStatementUpdate.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addPerson() {

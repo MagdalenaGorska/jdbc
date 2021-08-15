@@ -11,11 +11,11 @@ public class ParkingApp {
             parking.createTableParking();
             parking.createTablePerson();
             parking.setNumberOfParkingSpot();
-            parking.addPerson();
+           // parking.addPerson();
             //parking.testGet();
-            parking.addPerson();
-            parking.deletePerson();
-            parking.addPerson();
+           // parking.addPerson();
+           // parking.deletePerson();
+           // parking.addPerson();
 
 
         } catch (SQLException throwables) {
